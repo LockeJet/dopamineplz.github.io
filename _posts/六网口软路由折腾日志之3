@@ -1,0 +1,98 @@
+---
+layout:     post	# 使用的布局（不需要改）
+title:     六网口软路由折腾日志
+subtitle:   "PANABIT安装与配置"
+date:       2019-11-17
+author:     Jet
+header-img: img/post-bg-2015.jpg
+catalog: true
+tags: 
+- 软路由
+- PROXMOX
+- OPENWRT
+- PANABIT
+---
+# 六网口软路由折腾日志之3
+这次再安装一个流控试验一下，我选择了PANABIT（32位版本）
+## PANABIT 安装与配置
+PANABIT在ESIX安装网络上有类似的网页，但我这里是在PVE上安装，貌似还没有人做过。自己研读了一下ESIX上安装PANABIT的文章，关键点就是：
+1. PANABIT设置3个网卡（内网口、管理口口及外网口）。
+2. PANABIT位于路由器和局域网之间，PANABIT外网口连OPENWRT之LAN口，PANABIT之内网口连接局域网交换机。
+2. PANABIT将路由器和交换机桥接起来。
+明白了这3点，就不难安装及配置网络了。
+先配置PVE之/etc/network/interfaces文件：
+```
+auto lo
+iface lo inet loopback
+iface enp1s0 inet manual
+iface enp2s0 inet manual
+iface enp3s0 inet manual
+iface enp4s0 inet manual
+iface enp5s0 inet manual
+iface enp6s0 inet manual
+
+# VM1:OPENWRT
+
+# WAN
+auto vmbr0
+iface vmbr0 inet manual
+	bridge-ports enp1s0
+	bridge-stp off
+	bridge-fd 0
+# LAN
+auto vmbr1
+iface vmbr1 inet manual
+	bridge-ports enp2s0
+	bridge-stp off
+	bridge-fd 0
+
+auto vmbr1:0
+iface vmbr1:0 inet static
+	address  192.168.8.253
+	netmask  255.255.255.0
+	gateway  192.168.8.1
+
+# LAN
+auto vmbr2
+iface vmbr2 inet manual
+	bridge-ports enp3s0
+	bridge-stp off
+	bridge-fd 0
+
+# VM2:VYOS
+
+# WAN
+auto vmbr3
+iface vmbr3 inet dhcp
+        bridge-ports enp4s0
+        bridge-stp off
+        bridge-fd 0
+## LAN
+auto vmbr4
+iface vmbr4 inet manual
+	bridge-ports enp5s0 enp6s0
+	bridge-stp off
+	bridge-fd 0
+
+auto vmbr4:0
+iface vmbr4:0 inet static
+        address  192.168.6.251
+        netmask  255.255.255.0
+        gateway  192.168.6.1
+
+
+# VM3:PANABIT
+
+# WAN for PANABIT
+auto vmbr10
+iface vmbr10 inet manual
+	bridge-ports none
+	bridge-stp off
+	bridge-fd 0
+
+
+```
+## OPENWRT网口设置
+## PANABIT配置
+#OPENWRT之WAN口为桥接到vmbr0的网卡,LAN口为桥接到vmbr1和vmbr2的网卡；
+#PANABIT之WAN口为桥接到vmbr10的虚拟网卡。
