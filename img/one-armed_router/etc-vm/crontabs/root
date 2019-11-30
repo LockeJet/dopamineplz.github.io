@@ -1,4 +1,0 @@
-0 4 * * 0 /etc/coremark.sh
-0 5 * * 0 /usr/share/shadowsocksr/update.sh
-0 1 * * 0 echo "" > /tmp/ssrplus.log
-0 2 * * * /usr/share/shadowsocksr/subscribe.sh
