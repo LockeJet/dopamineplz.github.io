@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:     Openwrt路由器DDNS配
+title:     Openwrt路由器DDNS配置
 subtitle:   
 date:       2020-1-20
 author:     Jet
