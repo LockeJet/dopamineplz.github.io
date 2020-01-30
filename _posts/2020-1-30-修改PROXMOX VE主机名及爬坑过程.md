@@ -54,6 +54,7 @@ mv /var/lib/rrdcached/db/pve2-nodes/pve  /var/lib/rrdcached/db/pve2-nodes/nas
 mv /var/lib/rrdcached/db/pve2-storage/pve  /var/lib/rrdcached/db/pve2-storage/nas
 ```
 变成这样：
+
 ```
 root@nas:/var/lib/rrdcached/db# tree
 .
@@ -71,6 +72,7 @@ root@nas:/var/lib/rrdcached/db# tree
 
 5 directories, 29 files
 ```
+
 VM多了个2011，不知道怎么来的。
 
 
