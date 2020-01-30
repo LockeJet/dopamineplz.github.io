@@ -1,4 +1,18 @@
-# 修改PROXMOX VE主机名
+
+# 修改PROXMOX VE主机名及爬坑过程
+---
+layout:    post
+title:     修改PROXMOX VE主机名及爬坑过程
+subtitle:   
+date:       2020-1-30
+author:     Jet
+header-img: img/post-bg-2015.jpg
+catalog: true
+tags: 
+- Proxmox
+- node name
+- hostname
+---
 
 有两台PROXMOX VE主机，一台作为软路由，另外一台作为NAS。这里台都是默认的pve主机名，迫于强迫症，决定修改一下主机名。结果跳进大坑了，搞了一个晚上+一个早上才搞完。
 参见 https://pve.proxmox.com/wiki/Renaming_a_PVE_node
