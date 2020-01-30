@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      修改PROXMOX主机名及爬坑过程
+title:      修改PROXMOX主机名及其爬坑过程
 subtitle:   
 date:       2020-1-30
 author:     Jet
@@ -12,7 +12,7 @@ tags:
 - hostname
 ---
 
-# 修改PROXMOX VE主机名及爬坑过程
+# 修改PROXMOX VE主机名及其爬坑过程
 
 有两台PROXMOX VE主机，一台作为软路由，另外一台作为NAS。这里台都是默认的pve主机名，迫于强迫症，决定修改一下主机名。结果跳进大坑了，搞了一个晚上+一个早上才搞完。
 参见 https://pve.proxmox.com/wiki/Renaming_a_PVE_node
@@ -28,6 +28,7 @@ root@nas:~# cat /etc/hosts
 ```
 WEBUI里面出现这个：
 >hostname lookup 'pve' failed - failed to get address info for: pve: No address associated with hostname (500)
+
 因此还需要以下步骤：
 ```
 root@nas:~# cat /etc/postfix/main.cf
@@ -41,7 +42,7 @@ myhostname=nas.lan
 ```
 
 ## 移动相关文件
-1. nodes
+1. nodes文件
 ```
 cd /etc/pve/nodes
 mv pve/qemu-server/*.conf nas/qemu-server/
