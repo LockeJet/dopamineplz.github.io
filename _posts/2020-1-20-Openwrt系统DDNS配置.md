@@ -1,3 +1,16 @@
+---
+layout:     post
+title:     Openwrt路由器DDNS配
+subtitle:   
+date:       2020-1-20
+author:     Jet
+header-img: img/post-bg-2015.jpg
+catalog: true
+tags: 
+- DDNS
+- IPv6
+- OPENWRT
+---
 # Openwrt路由器DDNS配置
 
 ## 获取域名在CLOUDFLARE上的DNS_ID
