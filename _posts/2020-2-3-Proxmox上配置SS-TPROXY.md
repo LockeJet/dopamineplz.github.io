@@ -209,7 +209,7 @@ tail /var/log/v2ray/error.log发现，
 ##
 151.101.192.133         raw.githubusercontent.com
 ##
-18.141.1.43             example.com
+1.2.3.4                 example.com
 ```
 
 ## 测试
