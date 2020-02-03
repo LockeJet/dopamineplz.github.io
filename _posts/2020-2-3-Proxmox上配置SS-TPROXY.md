@@ -173,7 +173,7 @@ pre_start() {
             "port": 443,
             "users": [
               {
-                "id": "54c94ef2-b59d-11e7-abc4-cec278b6b50a",
+                "id": "<UUID here>",
                 "alterId": 16
               }
             ]
@@ -242,6 +242,10 @@ google.com.             133     IN      A       172.217.194.139
 ;; MSG SIZE  rcvd: 135
 ```
 用w3m可以打开google主页。
+
+ANDROID手机：
+
+设为静态IP,网关和域名均设置为PROXMOX的局域网地址，即可科学上网。
 
 ## 切换为shadowsocks-libev
 经过试验，ss也工作正常。
