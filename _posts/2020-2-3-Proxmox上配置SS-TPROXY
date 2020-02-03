@@ -211,3 +211,37 @@ tail /var/log/v2ray/error.log发现，
 ##
 18.141.1.43             example.com
 ```
+
+## 测试
+```
+root@nas:/etc/v2ray#  dig @127.0.0.1 google.com -p 65353
+
+; <<>> DiG 9.11.5-P4-5.1-Debian <<>> @127.0.0.1 google.com -p 65353
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 61033
+;; flags: qr rd ra; QUERY: 1, ANSWER: 6, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;google.com.                    IN      A
+
+;; ANSWER SECTION:
+google.com.             133     IN      A       172.217.194.138
+google.com.             133     IN      A       172.217.194.100
+google.com.             133     IN      A       172.217.194.101
+google.com.             133     IN      A       172.217.194.102
+google.com.             133     IN      A       172.217.194.113
+google.com.             133     IN      A       172.217.194.139
+
+;; Query time: 57 msec
+;; SERVER: 127.0.0.1#65353(127.0.0.1)
+;; WHEN: Mon Feb 03 14:39:26 CST 2020
+;; MSG SIZE  rcvd: 135
+```
+用w3m可以打开google主页。
+
+## 切换为shadowsocks-libev
+经过试验，ss也工作正常。
