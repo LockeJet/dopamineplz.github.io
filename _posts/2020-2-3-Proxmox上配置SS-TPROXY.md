@@ -1,4 +1,4 @@
-# Proxmox上配置SS-TPROXY
+# Proxmox上配置SS\-TPROXY
 
 ## 安装v2ray
 ```
