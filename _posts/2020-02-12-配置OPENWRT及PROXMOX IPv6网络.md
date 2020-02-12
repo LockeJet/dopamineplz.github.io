@@ -1,3 +1,17 @@
+---
+layout:     post
+title:     配置 OPENWRT 及 PROXMOX IPv6 网络
+subtitle:   
+date:       2020-02-12
+author:     Jet
+header-img: img/post-bg-2015.jpg
+catalog: true
+tags: 
+- openwrt
+- proxmox
+- ipv6
+- ddns
+---
 # 配置 OPENWRT 及 PROXMOX IPv6 网络
 
 ## OpenWrt IPv6配置
