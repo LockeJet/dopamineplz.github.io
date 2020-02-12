@@ -6,6 +6,7 @@ bash <(curl -L -s https://install.direct/go.sh)
 ```
 ## 安装dns2tcp
 ~~不知道是否必要，反正我安装了。~~
+
 应该没有必要，不过也安装了。
 ```
 apt-get install dns2tcp
