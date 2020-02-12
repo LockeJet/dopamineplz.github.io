@@ -1,4 +1,4 @@
-# 配置OPENWRT及PROXMOX IPv6网络
+# 配置 OPENWRT 及 PROXMOX IPv6 网络
 
 ## OpenWrt IPv6配置
 OpenWrt版本：18.06。
