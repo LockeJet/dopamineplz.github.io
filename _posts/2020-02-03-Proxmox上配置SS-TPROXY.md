@@ -1,4 +1,17 @@
-# Proxmox上配置SS\-TPROXY
+---
+layout:     post
+title:     Proxmox 上配置 SS-TPROXY
+subtitle:   
+date:       2020-02-03
+author:     Jet
+header-img: img/post-bg-2015.jpg
+catalog: true
+tags: 
+- tproxy
+- proxmox
+- v2ray
+---
+# Proxmox 上配置 SS-TPROXY
 
 ## 安装v2ray
 ```
