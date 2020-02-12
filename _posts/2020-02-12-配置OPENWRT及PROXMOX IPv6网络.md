@@ -21,6 +21,10 @@ OpenWrt版本：18.06。
 
 WAN口没有240e开头的地址，但是LAN口有，去设置完善一下：
 
+### Interfaces -> Global network options
+> IPv6 ULA-Prefix = fd00:db80::/48
+后话： 这个输入框我一开始是找不到的，在配置文件里修改之后才有这个输入框。一个BUG?
+
 ### Interfaces -> LAN
 #### Common Configuration -> General Setup
 
@@ -51,7 +55,8 @@ RA设置为server模式；
 
 DHCPv6设置之后某一模式后，ANDROID手机得不到IPv6公网地址；既然SLAAC比较普遍，干脆禁用DHCPv6模式。
 
-/etc/config/network总体配置如下：
+### 总配置
+/etc/config/network配置如下：
 ```
 config globals globals
         option ula_prefix fd00:db80::/48
@@ -87,6 +92,46 @@ config interface 'wan'
 
 >ip6class: Filter for prefix classes to accept on this interface (e.g. wan6 will only assign prefixes with class “wan6” but not e.g. “local”)
 
+另外/etc/config/dhcp内容如下：
+
+```
+config dnsmasq
+        option domainneeded '1'
+        option localise_queries '1'
+        option rebind_protection '1'
+        option rebind_localhost '1'
+        option local '/lan/'
+        option domain 'lan'
+        option expandhosts '1'
+        option authoritative '1'
+        option readethers '1'
+        option leasefile '/tmp/dhcp.leases'
+        option resolvfile '/tmp/resolv.conf.auto'
+        option nonwildcard '1'
+        option localservice '1'
+
+config dhcp 'lan'
+        option interface 'lan'
+        option start '100'
+        option limit '150'
+        option leasetime '12h'
+        list dhcp_option '3,192.168.8.1'
+        list dhcp_option '6,192.168.8.1'
+        option ndp 'hybrid'
+        option ra 'server'
+
+config dhcp 'wan'
+        option interface 'wan'
+        option ignore '1'
+
+config odhcpd 'odhcpd'
+        option maindhcp '0'
+        option leasefile '/tmp/hosts/odhcpd'
+        option leasetrigger '/usr/sbin/odhcpd-update'
+        option loglevel '4'
+
+```
+很多选项不知道对应LUCI的哪个地方，不知道是这么来的...
 
 
 ### 初步试验结果
