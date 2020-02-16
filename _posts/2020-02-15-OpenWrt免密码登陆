@@ -1,0 +1,63 @@
+# OpenWrt 上配置免密码登陆
+
+水文又一篇，仅当记录备查。
+
+## dropbear 配置：
+```
+admin@OpenWrt_KVM:~/backup$ sudo cat /etc/config/dropbear
+Password:
+
+config dropbear
+        option Interface 'lan'
+        option Port '28375'
+        option GatewayPorts 'on'
+        option PasswordAuth 'off'
+        option RootPasswordAuth 'off'
+
+config dropbear
+        option Interface 'wan'
+        option Port '28375'
+        option GatewayPorts 'on'
+        option PasswordAuth 'off'
+        option RootPasswordAuth 'off'
+
+```
+## 公钥、私钥生成与配置
+在LINUX电脑上生产秘钥文件：
+```
+ssh-keygen -f id_rsa-ow
+```
+产生一个id_rsa-ow（私钥，钥匙）和一个id_rsa-ow.pub（公钥，锁）文件。
+私钥文件存放在客户端。
+将.pub公钥文件上传至OpenWrt之/root/.ssh目录，并导入公钥：
+```
+cat id_rsa-ow.pub >> authorized_keys
+```
+OpenWrt采用dropbear,对应root用户，还需要额外步骤：
+```
+cp /root/.ssh/authorized_keys /etc/dropbear/
+chmod 700 /etc/dropbear
+chmod 600 /etc/dropbear/authorized_keys
+```
+配置config文件
+```
+root@nas:/opt# cat /root/.ssh/config
+Host ow
+        Hostname 192.168.8.1
+        User root
+        IdentityFile ~/.ssh/id_rsa-ow-root
+        Port 28375
+        HostkeyAlias "[OpenWrt]"
+```
+
+## 使用
+直接执行以下两个命令都可以免密码登陆：
+```
+ssh ow
+ssh -i /root/.ssh/id_rsa-router-root -p 28375 192.168.8.1
+```
+
+
+
+
+
