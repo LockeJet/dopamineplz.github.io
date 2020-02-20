@@ -1,0 +1,110 @@
+# 在Proxmox VE上搭建 emby server
+## OpenWrt VM设置端口映射
+在OpenWrt路由器防火墙配置文件/etc/config/firewall增加以下语句：
+```
+config redirect
+        option target 'DNAT'
+        option src 'wan'
+        option dest 'lan'
+        option proto 'tcp udp'
+        option src_dport '8087'
+        option dest_ip '192.168.8.254'
+        option dest_port '8087'
+        option name 'PVE-EMBY-DK-WEB'
+
+config redirect
+        option target 'DNAT'
+        option src 'wan'
+        option dest 'lan'
+        option proto 'tcp udp'
+        option src_dport '44387'
+        option dest_ip '192.168.8.254'
+        option dest_port '44387'
+        option name 'PVE-EMBY-DK-WEB-SSL'
+```
+## Proxmox nginx 配置
+利用PVE主机上的nginx进行反代，配置文件/etc/nginx/sites-enabled/docker-emby如下：
+```
+server
+{
+        listen 8087;
+        listen [::]:8087;
+        server_name ${DOMAIN};
+        #proxy_pass http://127.0.0.1:8096;
+        #return 301 http://$host$request_uri;
+        return http://127.0.0.1:8096;
+}
+
+server {
+        listen 44387 ssl http2;
+    listen [::]:44387 ssl http2;
+        server_name ${DOMAIN} 0.0.0.0;
+        ssl on;
+        ssl_certificate /etc/ssl/certs/${DOMAIN}.pem;
+        ssl_certificate_key /etc/ssl/certs/${DOMAIN}.key;
+        location / {
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:8096;
+        proxy_set_header Host $http_host;
+    }
+}
+
+```
+## docker 配置与运行
+
+```
+cd ~/docker/emby
+mkdir emby/config/certs
+```
+编辑docker-emby.sh文件：
+```
+#!/bin/bash
+
+docker stop emby
+docker rm emby
+
+docker run -d --name emby \
+    --network=nas-bridge \
+    --restart unless-stopped \
+    --volume ${PWD}/config:/config \
+    --volume ${PWD}/config/certs:/config/certs \
+    --volume ${PWD}/KidsVideo:/mnt/KidsVideo \
+    --volume ${PWD}/Video:/mnt/Video \
+    --volume ${PWD}/RestrictedVideo:/mnt/RestrictedVideo \
+    --publish 8096:8096 \
+    --publish 8920:8920 \
+    --env UID=1000 \
+    --env GID=1000 \
+    emby/embyserver:latest
+
+```
+注意，建议采用官方版本配置端口，貌似publish语句:左边要与右边的一致（emby docker的iptable貌似不支持不一致的端口）。
+
+预先将证书文件（fullchain.pem,cert.pem及privkey.pem复制到config/certs文件夹）后，生成emby-server支持的SSL证书：
+```
+cd config/certs
+openssl pkcs12 -export -out ${DOMAIN}.pfx -inkey privkey.pem -in cert.pem -certfile fullchain.pem
+```
+
+运行运行docker:
+```
+sh docker-emby.sh
+```
+
+## 配置embyserver,让其支持https
+在浏览器上输入
+>http://192.168.8.254:8096
+进入emby-server页面，设置用户名、密码之类的，进入
+管理Emby服务器->网络
+设置网络：
+- 确认本地http(s)端口为8096、8920；
+- 填写公开http(s)端口为8096、8920;
+外部域名:exmaple.com
+自定义证书路径:/config/certs/${DOMAIN}.pfx
+安全连接模式：由反向代理处理
+点击保存之后，在控制台重启Emby服务器即可。
+这样，通过域名就可以实现https访问。
+
+## TO-DO
+- 小米盒子3增强版ROOT;
+- 小米盒子3安装及配置kodi。
