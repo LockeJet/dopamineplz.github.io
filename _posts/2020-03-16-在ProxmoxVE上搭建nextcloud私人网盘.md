@@ -65,8 +65,8 @@ server {
     server_name ${DOMAIN};
     listen [::]:44388 ssl http2;
     #ssl on;
-    ssl_certificate /etc/ssl/certs/${DOMAIN}.pem;
-    ssl_certificate_key /etc/ssl/certs/${DOMAIN}.key;
+    ssl_certificate /etc/ssl/certs/${DOMAIN2}.pem;
+    ssl_certificate_key /etc/ssl/certs/${DOMAIN2}.key;
     ##include /etc/nginx/conf/ssl_params.conf;##ERROR
     client_max_body_size 10G;
     location / {
@@ -80,6 +80,7 @@ server {
 }
 
 ```
+
 ## docker 配置
 
 docker-compose.yml:
@@ -153,13 +154,14 @@ services:
 #      - GID=1000
 ```
 
-## 运行
+## 运行与排错
 
 执行命令：
 
 ```
 docker-compose up -d
 ```
+
 输入域名访问，在页面里面出现错误：
 
 >用户已存在
@@ -181,7 +183,7 @@ docker-compose up -d
     ),
 ```
 
-完了就可以登入了，此后增加一些用户。
+完了就可以登入了，此后可以在页面里增加一些用户。
 
 扫描增加的文件：
 
@@ -190,6 +192,7 @@ docker exec -it nextcloud occ files:scan -v -p "/abc/files/" abc
 ```
 
 ## TO DO
+待更新
 
 ```
 sudo -u www-data php occ  maintenance:install \
