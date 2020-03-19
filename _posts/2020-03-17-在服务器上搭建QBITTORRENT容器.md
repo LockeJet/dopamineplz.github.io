@@ -47,7 +47,7 @@ config redirect
 放行 44383、6881端口：
 
 ```
-# aria2...
+# aria2，
 iptables -A INPUT -p tcp -m multiport --dport 6800:6809,6810:6819,6880:6889,6860:6869 -m state --state NEW -j ACCEPT
 iptables -A INPUT -p udp -m multiport --dport 6800:6809,6810:6819,6880:6889,6860:6869 -m state --state NEW -j ACCEPT
 ```
@@ -90,6 +90,7 @@ services:
 
     restart: unless-stopped
 ```
+注意WEBUI_PORT设置为44373，同时ports要设置为44373->44373，否则最终访问时，页面时会空白。
 
 - 启动 
 
@@ -153,7 +154,7 @@ servic nginx restart
 
 > https://${DOMAIN}:44383
 
-> https://$<IP>:44383
+> https://${IP}:44383
 
 就可以进入QBITTORENT的前端，设置相关参数，就可以下载了。
 
