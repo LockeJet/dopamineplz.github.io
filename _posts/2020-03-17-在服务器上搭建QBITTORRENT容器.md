@@ -11,13 +11,7 @@ tags:
 - QBITTORENT
 ---
 
-# 服务器上搭建下载利器ARIA2容器及其WEBUI
-
-前段时间配置ARIA2的容器老是失败，主要是配置https老是出错，经常说权限问题。一气之下不搞了。可是过几天手又痒痒，重新找了一个，这几天终搞定了。这里记录一下。
-
-参考：
-- https://p3terx.com/archives/docker-aria2-pro.html
-- https://p3terx.com/archives/aria2-frontend-ariang-tutorial.html
+# 服务器上搭建QBITTORRENT容器
 
 ## Openwrt 防火墙配置
 
@@ -33,16 +27,6 @@ config redirect
         option name 'PVE-QBITTORRENT-DK'
         option src_dport '6881'
         option dest_port '6881'
-
-config redirect
-        option target 'DNAT'
-        option src 'wan'
-        option dest 'lan'
-        option proto 'tcp udp'
-        option dest_ip '192.168.8.254'
-        option name 'PVE-NGINX'
-        option src_dport '8080'
-        option dest_port '8080'
 
 config redirect
         option target 'DNAT'
@@ -89,11 +73,8 @@ services:
       - PGID=1000
       - TZ=Asia/Shanghai
       - UMASK_SET=022
-      #-  WEBUI_PORT=44373
-      #-  WEBUI_PORT=8073
-      #- WEBUI_PORT=44373
-      - WEBUI_PORT=8080
-      #- DOMAIN=https://${DOMAIN}
+      - WEBUI_PORT=44373
+      #- WEBUI_PORT=8080
 
     volumes:
       - ./config:/config
@@ -104,13 +85,10 @@ services:
     ports:
       - "6881:6881"
       - "6881:6881/udp"
-      #- "44373:8073"
-      - "8080:8080"
-      #- "44373:44373"
-      #- "8073:8073"
+      #- "8080:8080"
+      - "44373:44373"
 
     restart: unless-stopped
-
 ```
 
 - 启动 
@@ -154,7 +132,7 @@ server {
     ssl_certificate_key /etc/ssl/certs/${DOMAIN}.key;
     location / {
         proxy_redirect off;
-        proxy_pass http://127.0.0.1:8080;
+        proxy_pass http://127.0.0.1:44373;
         #proxy_set_header Host $http_host;
         proxy_set_header X-Forwarded-Host $host:$server_port;
     }
