@@ -29,20 +29,10 @@ config redirect
         option src 'wan'
         option dest 'lan'
         option proto 'tcp udp'
-        option src_dport '6800'
         option dest_ip '192.168.8.254'
-        option dest_port '6800'
-        option name 'PVE-ARIA2_DK'
- 
- config redirect
-        option target 'DNAT'
-        option src 'wan'
-        option dest 'lan'
-        option proto 'tcp udp'
-        option dest_ip '192.168.8.254'
-        option name 'PVE-ARIA2-DK'
-        option src_dport '6888'
-        option dest_port '6888'
+        option name 'PVE-QBITTORRENT-DK'
+        option src_dport '6881'
+        option dest_port '6881'
 
 config redirect
         option target 'DNAT'
@@ -50,9 +40,19 @@ config redirect
         option dest 'lan'
         option proto 'tcp udp'
         option dest_ip '192.168.8.254'
-        option src_dport '44381'
-        option dest_port '44381'
-        option name 'PVE-ARIA2-DK-WEB-SSL'
+        option name 'PVE-NGINX'
+        option src_dport '8080'
+        option dest_port '8080'
+
+config redirect
+        option target 'DNAT'
+        option src 'wan'
+        option dest 'lan'
+        option proto 'tcp udp'
+        option dest_ip '192.168.8.254'
+        option name 'PVE-QBITTORRENT-DK-WEB-SSL'
+        option src_dport '44383'
+        option dest_port '44383'
 
 ```
 
@@ -112,7 +112,7 @@ services:
     restart: unless-stopped
 
 
-## 启动 
+- 启动 
 
 ```
 docker-compose up -d
@@ -122,6 +122,7 @@ docker-compose up -d
 
 
 
+## NGINIX
 
 - 配置 NGINX 服务
 
@@ -175,7 +176,7 @@ servic nginx restart
 
 > https://$<IP>:44383
 
-就可以进入QBITTORENT的前端，设置RPC相关参数，就可以下载了。
+就可以进入QBITTORENT的前端，设置相关参数，就可以下载了。
 
 
 
