@@ -8,6 +8,7 @@ header-img: img/post-bg-2015.jpg
 catalog: true
 tags: 
 - ARMBIAN
+- 家庭网关
 - DNS
 - CLASH
 ---
@@ -17,6 +18,7 @@ tags:
 
 - DNSMASQ 分流
 采用CHINADNS。
+
 ```
 git clone https://github.com/felixonmars/dnsmasq-china-list
 
@@ -33,10 +35,12 @@ ln -s /opt/dnsmasq-china-list/apple.china.conf /etc/dnsmasq.d/apple.china.conf
 
 #防止在使用无效域名解析时被运营商劫持
 ln -s /opt/dnsmasq-china-list/bogus-nxdomain.china.conf /etc/dnsmasq.d/bogus-nxdomain.china.conf
+
 ```
 - DNSCRYPT 代理
 
 这里采用dnscrpy-proxy。
+
 ```
 DNSCRYPT_PROXY_URL=https://github.com/DNSCrypt/dnscrypt-proxy/releases/download/2.0.42/dnscrypt-proxy-linux_arm64-2.0.42.tar.gz
 wget ${DNSCRYPT_PROXY_URL} -O dnscrypt-proxy-linux.tar.gz
@@ -56,6 +60,7 @@ cp example-dnscrypt-proxy.toml dnscrypt-proxy.toml
 > doh
 
 将DNSCrypt-Proxy安装为服务并启动之：
+
 ```
 ./dnscrypt-proxy --service install
 ./dnscrypt-proxy --service start
@@ -66,6 +71,7 @@ cp example-dnscrypt-proxy.toml dnscrypt-proxy.toml
 > server=127.0.0.1#5311
 
 重启服务后，试验：
+
 ```
 systemctl dnsmasq restart
 nslookup google.com
@@ -76,6 +82,7 @@ Non-authoritative answer:
 Name:   google.com
 Address: 172.217.19.238
 ```
+
 可以看到已经无误的得到DNS地址了。
 
 
@@ -95,13 +102,16 @@ mkdir /etc/clash/
 wget https://geolite.clash.dev/Country.mmdb
 ```
 配置 CLASH
+
 参考了其它P文:
 
 https://github.com/V2RaySSR/Tools/blob/master/clash.yaml
 
 /etc/clash/config.yaml修改如下：
+
 - DNS 部分
 禁用clash自带的DNS，因为上面采用了DNSMASQ监听53端口：
+
 ```
 dns:
   enable: false
@@ -117,6 +127,7 @@ dns:
 > - name: "Trojan节点的主机测试"
 
 服务文件生成与配置：
+
 ```
 cat << EOF > /etc/systemd/system/clash.service
 [Unit]
@@ -137,9 +148,11 @@ systemctl start clash.service
 ```
 
 测试下 socks 代理是否可用:
+
 ```
 curl --socks5 localhost:7891 google.com
 ```
+
 出现
 > 301 Moved
 说明已经可以利用掉盘云的socks5代理科学上网了。
@@ -179,6 +192,7 @@ cat << EOF >> /etc/ppp/ip-up
 EOF
 
 ```
+
 这样内网主机也可以科学上网了。
 
 
