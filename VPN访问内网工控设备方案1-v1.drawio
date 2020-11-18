@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2020-11-18T07:49:45.261Z" agent="5.0 (Windows)" etag="zIXO33Shtv7Ad05T9tzU" version="13.9.9" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-18T07:52:26.561Z" agent="5.0 (Windows)" etag="Yk32Tt9ebMw8P4UPo6r3" version="13.9.9" type="github">
   <diagram name="Page-1" id="55a83fd1-7818-8e21-69c5-c3457e3827bb">
     <mxGraphModel dx="1736" dy="1729" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="0.5" pageWidth="1169" pageHeight="1654" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="bnl0o0phUVktk9OBC3Qj-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#CC00CC;fontSize=24;" vertex="1" parent="1">
-          <mxGeometry x="60" y="-20" width="750" height="510" as="geometry" />
+          <mxGeometry x="60" y="-20" width="880" height="510" as="geometry" />
         </mxCell>
         <mxCell id="bnl0o0phUVktk9OBC3Qj-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#CC00CC;fontSize=24;" vertex="1" parent="1">
           <mxGeometry x="110" y="-530" width="490" height="300" as="geometry" />
@@ -38,7 +38,7 @@
         <mxCell id="G7csEVz0UXpxjY1oYoXJ-19" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Internet&lt;/font&gt;" style="html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.cloud;fontSize=24;" parent="1" vertex="1">
           <mxGeometry x="1240" y="-750" width="390" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="G7csEVz0UXpxjY1oYoXJ-20" value="内网网关" style="shape=mxgraph.cisco.hubs_and_gateways.generic_gateway;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=left;outlineConnect=0;fontSize=24;" parent="1" vertex="1">
+        <mxCell id="G7csEVz0UXpxjY1oYoXJ-20" value="&lt;div align=&quot;center&quot;&gt;内网网关&lt;/div&gt;" style="shape=mxgraph.cisco.hubs_and_gateways.generic_gateway;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;fontSize=24;" parent="1" vertex="1">
           <mxGeometry x="572" y="122.5" width="116" height="100" as="geometry" />
         </mxCell>
         <mxCell id="G7csEVz0UXpxjY1oYoXJ-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;sketch=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;shadow=0;startArrow=oval;startFill=1;startSize=0;endArrow=oval;endFill=1;endSize=0;fontFamily=Helvetica;fontSize=24;strokeColor=#666600;" parent="1" source="G7csEVz0UXpxjY1oYoXJ-21" edge="1">
@@ -55,10 +55,12 @@
           <mxGeometry x="90" y="130" width="170" height="102.5" as="geometry" />
         </mxCell>
         <mxCell id="G7csEVz0UXpxjY1oYoXJ-22" value="172.16.0.1/6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=24;" parent="1" vertex="1" connectable="0">
-          <mxGeometry x="720.0046888731031" y="232.49971169249955" as="geometry" />
+          <mxGeometry x="720.0046888731031" y="232.49971169249955" as="geometry">
+            <mxPoint x="60" y="10" as="offset" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="G7csEVz0UXpxjY1oYoXJ-23" value="10.196.97.201/20" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontFamily=Helvetica;fontSize=24;" parent="1" vertex="1">
-          <mxGeometry x="625" y="80" width="200" height="30" as="geometry" />
+          <mxGeometry x="717" y="98.5" width="200" height="30" as="geometry" />
         </mxCell>
         <mxCell id="G7csEVz0UXpxjY1oYoXJ-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;sketch=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;shadow=0;startArrow=oval;startFill=1;startSize=0;endArrow=oval;endFill=1;endSize=0;fontSize=24;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#666600;" parent="1" source="G7csEVz0UXpxjY1oYoXJ-29" target="G7csEVz0UXpxjY1oYoXJ-20" edge="1">
           <mxGeometry relative="1" as="geometry">
